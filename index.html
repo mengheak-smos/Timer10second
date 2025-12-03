@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Chinese Festival Countdown</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+
+  <!-- Decorative Lanterns
+<img src="https://i.imgur.com/4Y8w7yB.png" class="lantern left">
+<img src="https://i.imgur.com/4Y8w7yB.png" class="lantern right"> -->
+
+  <div class="panel">
+    <div id="timer">0:10</div>
+    <button class="start" onclick="startTimer()">开始</button>
+    <button class="stop" onclick="stopTimer()">停止</button>
+    <button class="reset" onclick="resetTimer()">重置</button>
+  </div>
+
+  <script>
+let time = 10; // 10 seconds
+let interval;
+
+function updateDisplay() {
+  let m = Math.floor(time / 60);
+  let s = time % 60;
+  document.getElementById("timer").innerText = `${m}:${s.toString().padStart(2,'0')}`;
+}
+
+function startTimer() {
+  if (interval) return;
+  interval = setInterval(() => {
+    if (time > 0) {
+      time--;
+      updateDisplay();
+    } else {
+      clearInterval(interval);
+      interval = null;
+      animateTimeUp();
+    }
+  }, 1000);
+}
+
+function stopTimer() {
+  clearInterval(interval);
+  interval = null;
+}
+
+function resetTimer() {
+  stopTimer();
+  time = 10;
+  updateDisplay();
+  const timerEl = document.getElementById("timer");
+  timerEl.classList.remove("timeup");
+  timerEl.style.opacity = 1;
+  timerEl.style.transform = "scale(1)";
+}
+
+function animateTimeUp() {
+  const timerEl = document.getElementById("timer");
+  timerEl.innerText = "时间到!";
+  timerEl.classList.add("timeup");
+}
+
+updateDisplay(); // Initial display
+</script>
+
+</body>
+</html>
