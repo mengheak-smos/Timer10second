@@ -17,7 +17,7 @@
             justify-content: center;
             align-items: center;
             background: linear-gradient(#f9e4d1, #f7d7b9);
-            background-image: url(./38158.jpg);
+            background-image: url(./newbg.jpg);
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
@@ -152,4 +152,5 @@
                 width: auto;
             }
         }
+
 
