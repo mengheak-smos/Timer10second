@@ -1,30 +1,43 @@
-/* CSS from the original */
+/* CSS from the original + Responsiveness Updates */
+
         :root {
-            --color-background: #E8D3A8; /* Light Beige/Gold */
-            --color-card-bg: #F9F7F0; /* Off-White for Card */
-            --color-border: #9C1F15; /* Deep Red Border/Accent */
-            --color-text-time: #CC3300; /* Bright Red Time Display */
-            --color-btn-start: #D9534F; /* Red Start Button */
-            --color-btn-stop: #6A7780; /* Gray Stop Button */
-            --color-btn-reset: #E38D36; /* Orange/Gold Reset Button */
+            --color-background: #E8D3A8;
+            --color-card-bg: #F9F7F0;
+            --color-border: #9C1F15;
+            --color-text-time: #CC3300;
+            --color-btn-start: #e74c3c;
+            --color-btn-stop: #7f8c8d;
+            --color-btn-reset: #d35400;
         }
         body {
             margin: 0;
-            height: 100vh;
+            min-height: 100vh; /* Use min-height for better compatibility */
             display: flex;
+            flex-direction: column; /* Allow content stacking */
             justify-content: center;
             align-items: center;
-            /* Background image and styling from the original */
             background: linear-gradient(#f9e4d1, #f7d7b9);
-            background-image: url(./img/38158.jpg); /* Assuming this image path exists or replace it */
+            background-image: url(../img/38158.jpg);
             background-position: center;
             background-repeat: no-repeat;
             background-size: cover;
             font-family: Arial, sans-serif;
-            overflow: hidden;
+            overflow-x: hidden; /* Prevent horizontal scrolling */
+            padding: 20px; /* Add padding for small screens */
+            box-sizing: border-box;
         }
 
-        /* Using custom CSS for the panel to keep the original festival look */
+        /* Decorative image styling */
+        img {
+            max-width: 300px; /* Slightly reduced max size */
+            width: 80%; /* Make it responsive */
+            height: auto;
+            position: relative; /* Changed to relative for flow */
+            top: 0;
+            margin-bottom: 20px;
+        }
+
+        /* Using custom CSS for the panel */
         .panel {
             background: #fff5e8;
             padding: 50px 60px;
@@ -33,21 +46,39 @@
             box-shadow: 0 8px 25px rgba(0,0,0,0.15);
             text-align: center;
             position: relative;
+            max-width: 90%; /* Limit max width */
+            width: 450px; /* Default width */
+            box-sizing: border-box;
         }
 
         #timer {
-            font-size: 120px;
+            font-size: 120px; /* Large size */
             color: #d60000;
             font-weight: bold;
             margin-bottom: 30px;
             text-shadow: 3px 3px 0px #ffcf71;
-            /* Ensure smooth transition for 'timeup' animation */
             transition: all 1s ease-out; 
+            /* Use a responsive font unit */
+            font-size: 12vw; /* Start with a viewport unit */
+            max-font-size: 120px; /* Limit the max size */
         }
+        
+        /* Ensure font size doesn't become too small on very small screens */
+        @media (min-width: 400px) {
+            #timer {
+                font-size: 3.5rem; /* Use a fixed rem size for tiny phones */
+            }
+        }
+
+        @media (min-width: 600px) {
+            #timer {
+                font-size: 120px; /* Revert to original large size on wider screens */
+            }
+        }
+
 
         .timeup {
             color: #ffdd00;
-            /* Start of animation state for '时间到!' */
             transform: scale(2);
             opacity: 0;
             animation: explode 1s forwards;
@@ -59,10 +90,18 @@
             100% { transform: scale(0); opacity: 0; }
         }
 
-        /* Custom button styling (replacing default Bootstrap styles for a unique look) */
+        /* Button container for better mobile layout */
+        .button-group {
+            display: flex;
+            flex-wrap: wrap; /* Allow buttons to wrap */
+            justify-content: center;
+            gap: 10px; /* Space between buttons */
+        }
+
+        /* Custom button styling */
         .btn-custom {
             padding: 12px 28px;
-            margin: 0 10px;
+            margin: 0; /* Removed fixed margin, using gap in button-group */
             border: none;
             border-radius: 12px;
             font-size: 20px;
@@ -70,18 +109,46 @@
             transition: 0.2s;
             color: white;
             text-transform: uppercase;
+            flex-grow: 1; /* Make buttons grow to fill space */
+            min-width: 100px; /* Ensure a minimum size */
         }
 
-        .btn-start { background: #e74c3c; }
-        .btn-stop { background: #7f8c8d; }
-        .btn-reset { background: #d35400; }
+        .btn-start { background: var(--color-btn-start); }
+        .btn-stop { background: var(--color-btn-stop); }
+        .btn-reset { background: var(--color-btn-reset); }
 
-        .btn-custom:hover { opacity: 0.85; color: white; } /* Preserve hover effect */
+        .btn-custom:hover { opacity: 0.85; color: white; }
 
-        /* Decorative image styling (if needed) */
-        .image img {
-            max-width: 390px;
-            position: absolute;
-            top: 20px;
-            left: auto;
+        /* Media Query for smaller screens (like smartphones) */
+        @media (max-width: 500px) {
+            .panel {
+                padding: 30px 20px; /* Reduced padding */
+                width: 100%; /* Take full width minus padding */
+                max-width: 350px;
+            }
+
+            /* Stack buttons vertically on very small screens if necessary, 
+               but flex-wrap with min-width is often sufficient */
+            .btn-custom {
+                font-size: 16px;
+                padding: 10px 20px;
+                flex-basis: calc(50% - 5px); /* Two buttons per row */
+            }
+            /* Make reset button full width or keep 2/row */
+            .button-group .btn-reset {
+                flex-basis: 100%; 
+            }
+            
+            /* Re-adjust for better 3-button layout on small phones */
+             .btn-custom {
+                 flex-basis: 100%; /* Stack all buttons on very small screens */
+             }
+        }
+        
+        /* Re-adjustment for a 3-button inline layout on medium screens */
+        @media (min-width: 500px) {
+            .btn-custom {
+                flex-basis: auto; /* Allow buttons to size naturally */
+                width: auto;
+            }
         }
