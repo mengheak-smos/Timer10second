@@ -8,7 +8,7 @@
 </head>
 <body>
     <!-- <img src="./logo.jpg" alt="Festival Logo" /> -->
-    
+    <audio id="bgMusic" src="./countdown.mp3"></audio>
     <div class="panel">
         <div id="timer">5:00</div>
         <div class="button-group">
@@ -29,19 +29,30 @@
         }
 
         function startTimer() {
-            // Only start if interval is not already set (prevents multiple intervals)
-            if (interval) return; 
-            interval = setInterval(() => {
-                if (time > 0) {
-                    time--;
-                    updateDisplay();
-                } else {
-                    clearInterval(interval);
-                    interval = null;
-                    animateTimeUp();
-                }
-            }, 1000);
+    if (interval) return;
+
+    const music = document.getElementById("bgMusic");
+
+    // Play music when timer starts
+    music.currentTime = 0;
+    music.play();
+
+    interval = setInterval(() => {
+        if (time > 0) {
+            time--;
+            updateDisplay();
+        } else {
+            clearInterval(interval);
+            interval = null;
+
+            // Stop music when time is up
+            music.pause();
+            music.currentTime = 0;
+
+            animateTimeUp();
         }
+    }, 1000);
+}
 
         function stopTimer() {
             clearInterval(interval);
@@ -49,15 +60,20 @@
         }
 
         function resetTimer() {
-            stopTimer();
-            time = 300;
-            updateDisplay();
-            const timerEl = document.getElementById("timer");
-            // Remove animation classes and reset styles
-            timerEl.classList.remove("timeup");
-            timerEl.style.opacity = 1;
-            timerEl.style.transform = "scale(1)";
-        }
+    stopTimer();
+
+    const music = document.getElementById("bgMusic");
+    music.pause();
+    music.currentTime = 0;
+
+    time = 300;
+    updateDisplay();
+
+    const timerEl = document.getElementById("timer");
+    timerEl.classList.remove("timeup");
+    timerEl.style.opacity = 1;
+    timerEl.style.transform = "scale(1)";
+}
 
         function animateTimeUp() {
             const timerEl = document.getElementById("timer");
