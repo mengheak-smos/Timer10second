@@ -7,10 +7,10 @@
     <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-    <!-- <img src="./logo.jpg" alt="Festival Logo" /> -->
+    <!-- <img src="./bg-contest.jpg" alt="Festival Logo" /> -->
     <audio id="bgMusic" src="./countdown.mp3"></audio>
     <div class="panel">
-        <div id="timer">5:00</div>
+        <div id="timer">1:00</div>
         <div class="button-group">
             <button class="btn-custom btn-start" onclick="startTimer()">开始</button>
             <button class="btn-custom btn-stop" onclick="stopTimer()">停止</button>
@@ -19,7 +19,7 @@
     </div>
 
     <script>
-        let time = 300; // 10 seconds
+        let time = 60; // 10 seconds
         let interval;
 
         function updateDisplay() {
